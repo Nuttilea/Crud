@@ -8,5 +8,4 @@
 namespace Nuttilea\Crud;
 
 trait ComponentCrudTrait {
-
 }
