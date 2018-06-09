@@ -5,11 +5,13 @@
  * Date: 4/1/18
  * Time: 3:00 PM
  */
-namespace Nutillea\Crud;
+namespace Nuttilea\Crud;
 
-use Nutillea\TableView\ActionControl\Action;
-use Nutillea\TableView\TableColumn;
-use Nutillea\TableView\TableControl;
+use Nette\Application\UI\Control;
+use Nuttilea\TableControl\ActionControl\Action;
+use Nuttilea\TableControl\ITableConnector;
+use Nuttilea\TableControl\TableColumn;
+use Nuttilea\TableControl\TableControl;
 use Nette\Application\UI\Form;
 
 trait CrudTrait {
@@ -17,11 +19,9 @@ trait CrudTrait {
     /** @var string @persistent */
     public $action;
 
-    /** @var string @persistent */
-    public $id;
+    public $isAjax = false;
 
-    /** @var CrudFactory */
-    protected $crudFactory;
+    public $id;
 
     public abstract function onCreate(Form $form, $data);
 
@@ -31,30 +31,42 @@ trait CrudTrait {
 
     public abstract function fillUpdateForm($id, Form &$form);
 
-    /** @return CrudFactory */
-    public abstract function getCrudFactory();
+//    /** @return CrudFactory */
+//    public abstract function getCrudFactory();
+
+    /** @return Form */
+    public abstract function createCreateForm();
+
+    /** @return Form */
+    public abstract function createUpdateForm();
+
+    /** @return Control */
+    public abstract function createListView();
 
     /** @return Form */
     public function getCreateForm(){
-        return $this->getCrudFactory()->createCreateForm();
+        return $this->createCreateForm();
     }
 
     /** @return Form */
     public function getUpdateForm(){
-        return $this->getCrudFactory()->createUpdateForm();
+        return $this->createUpdateForm();
     }
 
-    /** @return TableControl */
-    public abstract function getListView();
+    /** @return Control */
+    public function getListView(){
+        return $this->createListView();
+    }
 
-
+    /** @return Control */
     public function createComponentList(){
         $listView = $this->getListView();
-        $listView->addAction('update', Action::EDIT, $this->lazyLink('update'));
-        $listView->addAction('delete', Action::DELETE, $this->lazyLink('delete!'));
+        $listView->addAction('update', Action::EDIT, $this->lazyLink('update'))->addClass($this->isAjax ? 'ajax' : '');
+        $listView->addAction('delete', Action::DELETE, $this->lazyLink('delete!'))->addClass($this->isAjax ? 'ajax' : '');
         return $listView;
     }
 
+    /** @return Control */
     public function createComponentCreate(){
         $createForm = $this->getCreateForm();
         $createForm->addSubmit('create', 'Create');
@@ -62,6 +74,7 @@ trait CrudTrait {
         return $createForm;
     }
 
+    /** @return Control */
     public function createComponentUpdate(){
         $updateForm = $this->getUpdateForm();
         $updateForm->addSubmit('update', 'Update');

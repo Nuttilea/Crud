@@ -6,7 +6,7 @@
  * Time: 4:43 PM
  */
 
-namespace Nutillea\Crud;
+namespace Nuttilea\Crud;
 
 
 interface ICrudEntityManage {

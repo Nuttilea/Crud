@@ -6,15 +6,14 @@
  * Time: 5:15 PM
  */
 
-namespace Nutillea\Crud;
+namespace Nuttilea\Crud;
 
-
-use Nutillea\TableView\DibiTableConnector;
+use Nuttilea\TableControl\ITableConnector;
 
 abstract class CrudFactory {
 
     public abstract function createCreateForm();
     public abstract function createUpdateForm();
-    public abstract function createListView(DibiTableConnector $connector);
+    public abstract function createListView(ITableConnector $connector);
 
 }

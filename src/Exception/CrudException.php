@@ -5,7 +5,7 @@
  * Date: 4/1/18
  * Time: 7:05 PM
  */
-namespace Nutillea\Crud\Exception;
+namespace Nuttilea\Crud\Exception;
 
 class CrudException extends \Exception {
 

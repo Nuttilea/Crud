@@ -5,7 +5,7 @@
  * Date: 4/1/18
  * Time: 3:01 PM
  */
-namespace Nutillea\Crud;
+namespace Nuttilea\Crud;
 
 trait ComponentCrudTrait {
 
